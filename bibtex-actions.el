@@ -152,7 +152,9 @@ specific to the item, rather than the citation as a whole.
          '(metadata
            (affixation-function . (mapcar
                                    (lambda (command)
-                                     (list (car command) "" (cdr command)) commands)))))
+                                     (list
+                                      (car command)
+                                      "" (propertize (cdr command) 'face 'bibtex-actions-suffix)) commands)))))
      (complete-with-action action commands string pred))
    nil nil nil nil default))
 
