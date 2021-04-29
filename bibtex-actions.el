@@ -65,6 +65,7 @@ display and for search."
 (defvar bibtex-actions-citation-commands-org
   ;; TODO make defcustom?
   '(("text" . "author-in-text, as with natbib citet")
+    ("suppress-author" . "suppressed author for first item in citation")
     ("plain". "integrated within text without surrounding punctuation"))
     "Org citation commands, and command descriptions.")
 
@@ -116,7 +117,7 @@ may be indicated with the same icon but a different face."
 
 The full citation syntax is:
 
-  [cite/style:common prefix ;prefix -@key suffix; ... ; common suffix]
+  [cite/style:common prefix ;prefix @key suffix; ... ; common suffix]
 
 Everything is optional, except the brackets, 'cite' and the colon.
 Also the citation must contain at least a key.
