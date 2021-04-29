@@ -137,27 +137,17 @@ specific to the item, rather than the citation as a whole.
   [cite: see ;@key pp23-24]"
   (let* ((commands bibtex-actions-citation-commands-org)
          (command  (if bibtex-completion-cite-prompt-for-optional-arguments
-                       (bibtex-actions--citation-commands-read commands "cite")))
+                       (bibtex-actions--citation-commands-read "default")))
          (prefix  (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Prefix: ") ""))
          (command  (if (string-equal command "cite") "" (concat "/" command)))
          (prefix  (if (string= "" prefix)  "" (concat prefix  " ;"))))
     ;; this is derived from the pandoc syntax function, but this has two-levels of affixes
     (format "[cite%s:%s%s]" command prefix (s-join ";" (--map (concat "@" it) keys)))))
 
-(defun bibtex-actions--citation-commands-read (commands default)
+(defun bibtex-actions--citation-commands-read (default)
   "Prompt user for citation command/style from COMMANDS, and define DEFAULT."
-  (completing-read
-   "Style: "
-   (lambda (string pred action)
-     (if (eq action 'metadata)
-         '(metadata
-           (affixation-function . (mapcar
-                                   (lambda (command)
-                                     (list
-                                      (car command)
-                                      "" (propertize (cdr command) 'face 'bibtex-actions-suffix)) commands)))))
-     (complete-with-action action commands string pred))
-   nil nil nil nil default))
+  (let ((choices '("textual/narrative (\citet)" "plain" "suppress-author")))
+    (message "%s" (ido-completing-read "Style:" choices nil nil nil nil default))))
 
 ;;; Completion functions
 (defun bibtex-actions-read ()
