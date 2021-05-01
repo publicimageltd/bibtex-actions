@@ -146,8 +146,8 @@ specific to the item, rather than the citation as a whole.
 
 (defun bibtex-actions--citation-commands-read (default)
   "Prompt user for citation command/style from COMMANDS, and define DEFAULT."
-  (let ((choices '("textual/narrative (\citet)" "plain" "suppress-author")))
-    (message "%s" (ido-completing-read "Style:" choices nil nil nil nil default))))
+  (let ((choices '("+ (textual/narrative)" "- (suppress author)" "t (title)" "a (author)" "l (locators)")))
+    (message "%s" (ido-completing-read "Style: " choices nil nil nil nil default))))
 
 ;;; Completion functions
 (defun bibtex-actions-read ()
